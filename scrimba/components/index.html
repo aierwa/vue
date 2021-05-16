@@ -1,0 +1,20 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="index.css" />
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <ol>
+        <!-- 这里只做数据绑定，具体数据逻辑放在component里面 -->
+        <todo-item
+          v-for="item in groceryList"
+          v-bind:todo="item"
+          v-bind:key="item.id"
+        ></todo-item>
+        <!-- 关于为什么需要绑定一个 key，参考：https://cn.vuejs.org/v2/guide/list.html  -->
+      </ol>
+    </div>
+    <script src="index.js"></script>
+  </body>
+</html>

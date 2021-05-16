@@ -1,0 +1,54 @@
+<body>
+  <div id="app">
+    <h2>{{product}} are in stock</h2>
+    <ul>
+      <li v-for="prod in products">
+        <!--数量直接绑定到input-->
+        <input type="number" v-model.number="prod.quantity" />
+        {{prod.name}}
+        <span v-if="prod.quantity === 0"> - OUT OF STOCK</span>
+        <button @click="prod.quantity += 1">Add</button>
+      </li>
+    </ul>
+    <h2>Total Inventory: {{ totalProducts }}</h2>
+  </div>
+
+  <script src="https://unpkg.com/vue"></script>
+  <script>
+    const app = new Vue({
+      el: '#app',
+      data: {
+        product: 'Booooks',
+        products: [],
+      },
+
+      computed: {
+        // 计算型属性，会缓存结果，比如products发生改变，会重新计算
+        // 和methods区别，methods没有缓存，每次都会调用
+        totalProducts() {
+          return this.products.reduce((sum, product) => {
+            return sum + product.quantity
+          }, 0)
+        },
+      },
+
+      created() {
+        // 生命周期钩子，实例创建完成后立即调用
+        // 模拟获取数据
+        fetch('https://www.baidu.com', {
+          // 跨域
+          mode: 'no-cors',
+        })
+          .then((response) => response)
+          .then((json) => {
+            //   this.products = json.products
+            this.products = [
+              { quantity: 10, name: 'books' },
+              { quantity: 0, name: 'socks' },
+              { quantity: 5, name: 'jacks' },
+            ]
+          })
+      },
+    })
+  </script>
+</body>
