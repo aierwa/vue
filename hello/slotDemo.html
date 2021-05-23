@@ -1,0 +1,47 @@
+<body>
+  <!-- view 层-->
+  <div id="app">
+    <todo>
+      <!-- todo-title 组件绑定到 todo-title 插槽中，并且把title属性绑定到Vue data中的title -->
+      <todo-title slot="todo-item" :title="title"></todo-title>
+      <!-- todo-item 组件绑定到 todo-item 插槽中，并且把item属性绑定到Vue data中的items遍历后的每一个item -->
+      <todo-item
+        slot="todo-item"
+        v-for="item in items"
+        :item="item"
+      ></todo-item>
+    </todo>
+  </div>
+
+  <script src="https://unpkg.com/vue"></script>
+  <script>
+    Vue.component('todo', {
+      //模板中有两个插槽，分别叫todo-title和todo-item
+      template:
+        '<div>\
+               <slot name="todo-title"></slot>\
+               <ul>\
+                 <slot name="todo-item"></slot>\
+               </ul>\
+             </div>',
+    })
+    //定义title组件
+    Vue.component('todo-title', {
+      props: ['title'],
+      template: '<p>{{title}}</p>',
+    })
+    //定义列表项组件
+    Vue.component('todo-item', {
+      props: ['item'],
+      template: '<li>{{item}}</li>',
+    })
+
+    var vm = new Vue({
+      el: '#app',
+      data: {
+        title: '系列课程',
+        items: ['Java', 'Vue', 'Linux'],
+      },
+    })
+  </script>
+</body>
